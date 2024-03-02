@@ -1,0 +1,7 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    background: linear-gradient(to right, #ff69b4, #ff9800);
+    color: #d4d4d4; /* Light text color */
+    font-family: 'Arial', sans-serif; /* Specify your preferred font */
+    margin: 0; /* Remove default margin to ensure full coverage */
+  }

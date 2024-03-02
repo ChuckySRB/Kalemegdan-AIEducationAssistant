@@ -1,0 +1,41 @@
+.container {
+    display: flex;
+  }
+
+  .column {
+    flex: 1;
+    padding: 15px;
+  }
+
+  .left {
+    order: 1;
+  }
+
+  .right {
+    order: 2;
+  }
+
+.assignment-container {
+    background-color: #1e1e1e; /* Dark background color */
+    color: #d4d4d4; /* Light text color */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Small shadow effect */
+  }
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  hr {
+    border: 1px solid #424242; /* Border color */
+    margin: 15px 0;
+  }
+
+  .box {
+    background-color: #2d2d2d; /* Similar background color */
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+  }

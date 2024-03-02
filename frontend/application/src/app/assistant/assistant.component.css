@@ -1,0 +1,6 @@
+.assistant-container{
+    border-radius: 8px; /* Adjust the border-radius for the desired roundness */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Small shadow effect */
+  padding: 15px; /* Adjust padding as needed */
+  margin-bottom: 20px;
+}
