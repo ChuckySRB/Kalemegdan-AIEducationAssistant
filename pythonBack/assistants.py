@@ -3,7 +3,7 @@
 class Assistant:
     name = "Aca"
     setting = "isti neki"
-    format = "{ hints: [ {type: '', text: 'Hint num1 in a one sentence'},]}"
+    format = "{ 'hints': [ {'type': '', 'text': 'Hint num1 in a one sentence'}]}"
     format_explanation = ""
     system = "You are an intelligent teaching assistant on an online course!"
 
@@ -19,10 +19,10 @@ class Weakness(Assistant):
 # Compiling code
 class CodeValidator(Assistant):
     name = "Vladimir"
-    setting = "You will get a students code and your job is to predict output"
-    format = "{error: bool, valid: bool}"
-    format_explanation = " Only return these 2 fields in json format and no additional text. Field error should be true if the code doesnt give output do to error, field valid should be true if the codes output is the same as expected output"
-    system = "You are predicting code output accurately!"
+    setting = "You will get a students code and your job is to predict output in provided format only with no aditional text. Act as a compiler and dont give me anything else in output other then returned object"
+    format = "{'error': true/false, 'valid': true/false}"
+    format_explanation = " Only return these 2 fields in this format and no additional text. Field error should be true if the code doesnt give output do to error, field valid should be true if the codes output is the same as expected output"
+    system = "You are predicting code output in given format accurately!"
 
 
 # Main Assistants on the web page helping with tasks

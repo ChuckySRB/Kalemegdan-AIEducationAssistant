@@ -1,12 +1,24 @@
-from flask import Flask,request, jsonify
+from flask import Flask, request, jsonify
 from db import Connection
-
+from grazie_utils import *
+from assistants import *
+import json
 
 app = Flask(__name__)
 db = Connection("codding_tasks_db")
 tasks_collection = db.tasks
 
+
 weakness_collection =db.weakness
+
+# Assitents
+
+vlada = CodeValidator()
+vesna = Vesna()
+vid = Vid()
+veles = Veles()
+
+
 
 @app.route("/")
 def home():
@@ -25,18 +37,50 @@ def send_attempt():
         if task_id is None:
             raise ValueError("'id' is missing in the JSON data")
 
+        # Check if the task exists in the database
+        task = tasks_collection.find_one({"idT": task_id})
 
+        if task is None:
 
-        hints = [{"type":"time","text":"Bad complexity"},{"type":"space","text":"Bad complexity"}]
+            # If the task doesn't exist, create a new task
+            new_task = {
+                "idT": task_id,
+                "name": json_data.get("name", ""),
+                "description": json_data.get("description", ""),
+                "attempts": []
+            }
+            tasks_collection.insert_one(new_task)
+            task = new_task
+            previous_attempts = []
+
+        else:
+
+            # If the task exists, retrieve previous attempts
+            previous_attempts = task.get('attempts', [])[:]
+
+        code =  json_data.get("code", "")
+        input = json_data.get("code_input", "")
+        output = json_data.get("code_output", "")
+
+        compiled_code = json.loads(grazie_compiler_request(vlada, code, input, output).replace("'", "\""))
+        print(f"Compiled code: {compiled_code}")
+        if compiled_code["error"] or not compiled_code["valid"]:
+            hints = json.loads(grazie_assistant_request(vid, task, code).replace("\"", "").replace("'", "\""))["hints"]
+
+        else:
+            hints = json.loads(grazie_assistant_request(vesna, task, code).replace("\"", "").replace("'", "\""))["hints"] \
+                    + json.loads(grazie_assistant_request(veles, task, code).replace("\"", "").replace("'", "\""))["hints"] \
+
         new_attempt = {
             "timestamp": json_data.get("time", ""),
-            "code": json_data.get("code", ""),
-            "hints":hints,
-            "correct":"True"
+            "hints": hints,
+            "code": code,
+            "correct": compiled_code["valid"]
 
         }
 
         task['attempts'].append(new_attempt)
+
 
 
 

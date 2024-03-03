@@ -7,13 +7,14 @@ token = "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJHcmF6aWUgQXV0aGVudGljYX
 client_ip = "192.168.0.19"
 
 
-def grazie_assistant_request(assistant, task_text, task_past_attempts, task_attempt):
+def grazie_assistant_request(assistant, task, new_attempt):
+
     whole_prompt = "Your setting: " + assistant.setting \
                    + "Your Name: " + assistant.name \
-                    + "Required Task: " + task_text \
+                    + "Required Task: " + task["description"] \
                    + "Format of your answer should be: " + assistant.format + assistant.format_explanation\
-                   + "Your Context of previous entries:" + task_past_attempts \
-                   + "Your Content: " + task_attempt    \
+                   + "Your Context of previous entries:" + str(task["attempts"]) + " Don't repeat the same hints!"\
+                   + "Your Content: " + new_attempt    \
 
 
     client = GrazieApiGatewayClient(
@@ -32,3 +33,30 @@ def grazie_assistant_request(assistant, task_text, task_past_attempts, task_atte
     )
     print("HELPFUL ASSISTANT---------------------------------------------------------------------")
     print(response.content)
+    return response.content
+
+
+def grazie_compiler_request(assistant, code, code_input, code_output):
+    whole_prompt =  "Test input for user code: " + code_input \
+                    + "Expected output for user code: " + code_output \
+                    + "Compile the code and compare expected output with the actual output and return me the results in this format: " + assistant.format + assistant.format_explanation \
+                    + "Your setting: " + assistant.setting \
+                    + "User code: " + code
+
+    client = GrazieApiGatewayClient(
+        url=GrazieApiGatewayUrls.STAGING,
+        grazie_jwt_token=token,
+        auth_type=AuthType.APPLICATION,
+    )
+    response = client.chat(
+        chat=(
+            ChatPrompt().add_system(assistant.system).add_user(whole_prompt)
+        ),
+        profile=Profile.OPENAI_GPT_4,
+        headers={
+            GrazieHeaders.ORIGINAL_USER_IP: client_ip,
+        }
+    )
+    print("CODE VALIDATOR ---------------------------------------------------------------------")
+    print(response.content)
+    return response.content
