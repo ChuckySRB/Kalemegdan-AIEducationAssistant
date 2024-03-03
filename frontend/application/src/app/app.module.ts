@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { AssistantComponent } from './assistant/assistant.component';
 import { AssignmentComponent } from './assignment/assignment.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { AssignmentComponent } from './assignment/assignment.component';
     CodeComponent,
     HomeComponent,
     AssistantComponent,
-    AssignmentComponent
+    AssignmentComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

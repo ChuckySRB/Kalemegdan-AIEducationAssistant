@@ -1,1 +1,25 @@
-<p>assistant works!</p>
+<div class="assistant-container">
+    <div class="row">
+      <div class="assistant-picture">
+        <img [src]="assistantPicturePath" alt="Assistant Picture">
+      </div>
+      <div class="selected-hint-container" *ngIf="selectedHint">
+        <div class="selected-hint">
+          {{ selectedHint.text }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="hints-container">
+        <div *ngFor="let hint of hints" class="hint">
+          <div (click)="showHint(hint)" class="hint-icon" [ngClass]="{'validation' : hint.type === 'validation', 'structure': hint.type === 'structure', 'complexity': hint.type === 'complexity'}">
+            <i class="fa" [ngClass]="{'fa-exclamation': hint.type === 'validation', 'fa-question': hint.type === 'structure', 'fa-hourglass': hint.type === 'complexity'}"></i>
+          </div>
+          <div class="hint-text-container">
+            {{ hint.text }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

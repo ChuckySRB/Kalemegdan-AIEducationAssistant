@@ -7,6 +7,8 @@
     </select>
 
     <div>
-      <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code" [language]="selectedLanguage"></ngx-monaco-editor>
+      <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code" [language]="selectedLanguage" #editor></ngx-monaco-editor>
     </div>
+
+    <button class="submit-button">Submit</button>
   </div>

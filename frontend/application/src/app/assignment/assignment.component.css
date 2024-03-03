@@ -16,8 +16,8 @@
   }
 
 .assignment-container {
-    background-color: #1e1e1e; /* Dark background color */
-    color: #d4d4d4; /* Light text color */
+    background-color: var(--dark-background-color); /* Dark background color */
+    color: var(--light-text-color); /* Light text color */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Small shadow effect */
