@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { EventEmitterService } from '../event-emitter.service';
 
 @Component({
   selector: 'app-assistant',
   templateUrl: './assistant.component.html',
   styleUrl: './assistant.component.css'
 })
-export class AssistantComponent {
+export class AssistantComponent implements OnInit{
   assistantPicturePath: string = '/assets/veles_assist.png';
   selectedHint: { type: string, text: string } | null = null;
   hints: { type: string, text: string, showText: boolean }[] = [
@@ -19,13 +20,24 @@ export class AssistantComponent {
     { type: 'complexity', text: 'Hint 4: This is a complexity hint' , showText: false}
   ];
 
+  constructor(private eventEmitterDataService: EventEmitterService,
+    private cdr: ChangeDetectorRef) { }
+
+  ngOnInit(): void {
+    this.eventEmitterDataService.hintsReceived.subscribe((hints: any) => {
+      console.log('Hints received:', hints);
+      this.hints = hints;
+      this.cdr.detectChanges();
+    });
+  }
+
   changePicturePath(newPath: string) {
     this.assistantPicturePath = newPath;
   }
 
-  filterHintsByType(type: string): { type: string, text: string , showText:boolean}[] {
-    return this.hints.filter(hint => hint.type === type);
-  }
+  // filterHintsByType(type: string): { type: string, text: string , showText:boolean}[] {
+  //   return this.hints.filter(hint => hint.type === type);
+  // }
 
   showHint(hint: { type: string, text: string, showText: boolean }) {
     // hint.showText = !hint.showText;

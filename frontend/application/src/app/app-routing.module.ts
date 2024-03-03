@@ -5,7 +5,7 @@ import { AssignmentComponent } from './assignment/assignment.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'assignment', component: AssignmentComponent}
+  {path: 'assignment/:id', component: AssignmentComponent}
 ];
 
 @NgModule({

@@ -1,6 +1,8 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { EditorService } from '../editor.service';
 import * as monaco from 'monaco-editor';
+import { AssignmentService } from '../assignment.service';
+import { EventEmitterService } from '../event-emitter.service';
 
 @Component({
   selector: 'app-code',
@@ -9,8 +11,9 @@ import * as monaco from 'monaco-editor';
 })
 export class CodeComponent implements AfterViewInit{
   @ViewChild('editor') editor: any;
+  @Input() taskId: number | undefined;
 
-  constructor(private editorService:EditorService) {}
+  constructor(private editorService:EditorService, private assignmentService: AssignmentService, private eventEmitter: EventEmitterService) {}
 
   selectedLanguage: string = 'typescript'; //default language
 
@@ -24,5 +27,24 @@ export class CodeComponent implements AfterViewInit{
   changeLanguage() {
     // this.editorService.setLanguage(this.selectedLanguage);
     this.editorOptions = {theme: 'vs-dark', language: this.selectedLanguage};
+  }
+
+  sendAttempt(){
+    const attempt = {
+      taskId: this.taskId,
+      timestamp: new Date().toISOString(),
+      language: this.selectedLanguage,
+      code: this.code
+    }
+
+    this.assignmentService.sendAttempt(attempt).subscribe(
+      (response) => {
+        console.log('Attempt sent:', response);
+        this.eventEmitter.receiveHints(response);
+      },
+      (error) => {
+        console.error('Error sending attempt:', error);
+      }
+    );
   }
 }

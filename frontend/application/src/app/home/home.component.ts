@@ -1,19 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AssignmentService } from '../assignment.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private assignmentService: AssignmentService) { }
 
-  tasks: string[] = ['Task 1', 'Task 2', 'Task 3'];
+  ngOnInit(): void {
+    this.assignmentService.getAllAssignments().subscribe((data: any) => {
+      this.tasks = data;
+    });
+  }
+  // tasks: string[] = ['Task 1', 'Task 2', 'Task 3'];
+  tasks: any[] = [];
 
-  navigateToAssignment(task: string) {
-    // this.taskService.selectTask(task);
-    this.router.navigate(['/assignment']);
+  navigateToAssignment(task: any): void {
+    this.router.navigate(['/assignment', task.id]);
   }
 }
