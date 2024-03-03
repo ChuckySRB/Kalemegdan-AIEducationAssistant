@@ -1,26 +1,35 @@
 .menu-bar {
-    background-color: var(--dark-background-color); /* Adjust background color */
-    color: #fff; /* Adjust text color */
-    padding: 15px;
-    text-align: center;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    display: inline;
-    margin-right: 15px;
-  }
-  
-  a {
-    text-decoration: none;
-    color: #fff; /* Adjust link color */
-    font-weight: bold;
-  }
-  
-  a:hover {
-    color: #ddd; /* Adjust link color on hover */
-  }
+  background-color: var(--dark-background-color); /* Adjust background color */
+  color: #fff; /* Adjust text color */
+  padding: 15px;
+  display: flex;
+  justify-content: left; /* Distribute space between logo and menu items */
+  align-items: center;
+}
+
+.logo img {
+  width: 50px; /* Adjust the width of your logo */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+li {
+  margin-right: 15px;
+}
+
+a {
+  text-decoration: none;
+  color: #fff; /* Adjust link color */
+  font-weight: bold;
+}
+
+a:hover {
+  color: #ddd; /* Adjust link color on hover */
+}
