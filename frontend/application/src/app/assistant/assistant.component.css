@@ -28,6 +28,15 @@
   overflow: hidden; 
 }
 
+.random-hint {
+  width: 20vw; /* Set a fixed width */
+  /* height: 40vh; Set a fixed height */
+  margin: 10px; /* Adjust as needed for spacing between selected hint and hint icons list */
+  background-color: var(--dark-background-color);
+  border-radius: 5px;
+  padding: 10px;
+}
+
 .selected-hint {
    /* Background color for the selected hint */
   padding: 10px;

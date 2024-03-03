@@ -10,6 +10,10 @@
       </div>
     </div>
     <div class="row">
+      
+      <div class="random-hint">
+        Don't forget to take a break from studying every 45 minutes!
+      </div>
       <div class="hints-container">
         <div *ngFor="let hint of hints" class="hint">
           <div (click)="showHint(hint)" class="hint-icon" [ngClass]="{'validation' : hint.type === 'VALIDATION' || hint.type === 'ERROR', 'structure': hint.type === 'STRUCTURE', 'complexity': hint.type === 'COMPLEXITY'}">
@@ -19,6 +23,7 @@
             Submission {{ hint.submission }}
           </div>
         </div>
+        
       </div>
     </div>
   </div>
