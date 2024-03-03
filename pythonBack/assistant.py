@@ -6,6 +6,7 @@ from grazie.api.client.endpoints import GrazieApiGatewayUrls
 from grazie.api.client.profiles import Profile
 
 
+
 def parse_response(response):
     info = {}
     current_section = None

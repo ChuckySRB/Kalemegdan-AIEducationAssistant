@@ -5,6 +5,7 @@ from db import Connection
 app = Flask(__name__)
 db = Connection("codding_tasks_db")
 tasks_collection = db.tasks
+weakness_collection =db.weakness
 @app.route("/")
 def home():
     return "Hello, World!"
@@ -21,6 +22,8 @@ def send_attempt():
 
         if task_id is None:
             raise ValueError("'id' is missing in the JSON data")
+
+
 
         # Check if the task exists in the database
         task = tasks_collection.find_one({"idT": task_id})
@@ -45,10 +48,11 @@ def send_attempt():
             previous_attempts = task.get('attempts', [])[:]
 
         # Add the new attempt to the task's attempts array
+        hints = [{"type":"time","text":"Bad complexity"},{"type":"space","text":"Bad complexity"}]
         new_attempt = {
             "timestamp": json_data.get("time", ""),
             "code": json_data.get("code", ""),
-            "hint":"asd",
+            "hints":hints,
             "correct":"True"
 
         }
@@ -70,6 +74,27 @@ def send_attempt():
 
     except Exception as e:
         # Handle any exceptions that might occur
+        error_message = {"status": "error", "message": str(e)}
+        return jsonify(error_message), 400
+
+
+
+@app.route("/add_weakness", methods = ["POST"])
+
+def add_weakness():
+    try:
+        json_data = request.get_json()
+        new_weakness = {
+            "name" : json_data.get("name",""),
+            "description": json_data.get("description",""),
+            "suggestion":json_data.get("suggestions","")
+        }
+        weakness_collection.insert_one(new_weakness)
+
+        response_data = {"status": "success", "message": "Everything okay"}
+        return jsonify(response_data), 200
+
+    except Exception as e:
         error_message = {"status": "error", "message": str(e)}
         return jsonify(error_message), 400
 
