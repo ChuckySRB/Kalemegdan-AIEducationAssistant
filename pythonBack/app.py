@@ -4,6 +4,7 @@ from db import Connection
 from grazie_utils import *
 from assistants import *
 import json
+import re
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:4200"])
@@ -64,7 +65,8 @@ def send_attempt():
         input = json_data.get("code_input", "")
         output = json_data.get("code_output", "")
 
-        compiled_code = json.loads(grazie_compiler_request(vlada, code, input, output).replace("'", "\""))
+        json_pattern = r'{.*?}'
+        compiled_code = json.loads(re.findall(json_pattern, grazie_compiler_request(vlada, code, input, output))[0].replace("'", "\""))
         print(f"Compiled code: {compiled_code}")
         if compiled_code["error"] or not compiled_code["valid"]:
             hints = json.loads(grazie_assistant_request(vid, task, code).replace("\"", "").replace("'", "\""))["hints"]
