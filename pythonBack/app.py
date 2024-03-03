@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from db import Connection
 from grazie_utils import *
 from assistants import *
 import json
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:4200"])
 db = Connection("codding_tasks_db")
 tasks_collection = db.tasks
 

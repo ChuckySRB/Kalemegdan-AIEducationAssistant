@@ -12,11 +12,11 @@
     <div class="row">
       <div class="hints-container">
         <div *ngFor="let hint of hints" class="hint">
-          <div (click)="showHint(hint)" class="hint-icon" [ngClass]="{'validation' : hint.type === 'validation', 'structure': hint.type === 'structure', 'complexity': hint.type === 'complexity'}">
-            <i class="fa" [ngClass]="{'fa-exclamation': hint.type === 'validation', 'fa-question': hint.type === 'structure', 'fa-hourglass': hint.type === 'complexity'}"></i>
+          <div (click)="showHint(hint)" class="hint-icon" [ngClass]="{'validation' : hint.type === 'VALIDATION' || hint.type === 'ERROR', 'structure': hint.type === 'STRUCTURE', 'complexity': hint.type === 'COMPLEXITY'}">
+            <i class="fa" [ngClass]="{'fa-exclamation': hint.type === 'VALIDATION' || hint.type === 'ERROR', 'fa-question': hint.type === 'STRUCTURE', 'fa-hourglass': hint.type === 'COMPLEXITY'}"></i>
           </div>
           <div class="hint-text-container">
-            {{ hint.text }}
+            Submission {{ hint.submission }}
           </div>
         </div>
       </div>

@@ -13,13 +13,15 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     this.assignmentService.getAllAssignments().subscribe((data: any) => {
-      this.tasks = data;
+      // console.log(data);
+      this.tasks = data.tasks;
+      // console.log(this.tasks);
     });
   }
   // tasks: string[] = ['Task 1', 'Task 2', 'Task 3'];
   tasks: any[] = [];
 
   navigateToAssignment(task: any): void {
-    this.router.navigate(['/assignment', task.id]);
+    this.router.navigate(['/assignment', task.idT]);
   }
 }

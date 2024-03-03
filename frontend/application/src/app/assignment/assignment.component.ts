@@ -10,7 +10,8 @@ import { AssignmentService } from '../assignment.service';
 export class AssignmentComponent implements OnInit{
 
   taskId!: number;
-  task: any;
+  taskName: any;
+  taskDesc: any;
 
   constructor(private route: ActivatedRoute, private assignmentService: AssignmentService) { }
 
@@ -23,8 +24,10 @@ export class AssignmentComponent implements OnInit{
 
   loadTask(): void {
     this.assignmentService.getAssignmentById(this.taskId).subscribe(
-      (task: any) => {
-        this.task = task;
+      (response: any) => {
+        // console.log(response);
+        this.taskName = response.task_name;
+        this.taskDesc = response.task_desc;
       },
       (error) => {
         console.error('Error fetching task:', error);

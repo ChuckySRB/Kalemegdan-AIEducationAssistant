@@ -35,7 +35,7 @@
 }
 
 .hints-container {
-  width: 100%;
+  width: 75%;
   max-height: 150px; /* Set a max height to make it scrollable */
   overflow-y: auto; /* Enable vertical scrolling if needed */
   scrollbar-width: thin; /* For Firefox */
@@ -86,7 +86,13 @@
 }
 
 .hint-text-container {
-  display: none; /* Initially hide the hint text */
+  width: 50%;
+  /* height: 40vh; Set a fixed height */
+  margin: 10px; /* Adjust as needed for spacing between selected hint and hint icons list */
+  background-color: var(--dark-background-color);
+  border-radius: 5px;
+  padding: 10px;
+  /* overflow: hidden;  */
 }
 
 .hint.active .hint-text-container {

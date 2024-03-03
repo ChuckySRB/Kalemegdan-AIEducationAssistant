@@ -9,24 +9,19 @@ import { EventEmitterService } from '../event-emitter.service';
 export class AssistantComponent implements OnInit{
   assistantPicturePath: string = '/assets/veles_assist.png';
   selectedHint: { type: string, text: string } | null = null;
-  hints: { type: string, text: string, showText: boolean }[] = [
-    { type: 'structure', text: 'Hint 1: This is an structure hint' , showText: false},
-    { type: 'validation', text: 'Hint 2: This is a validation hint' , showText: false},
-    { type: 'error', text: 'Hint 3: This is a error hint' , showText: false},
-    { type: 'complexity', text: 'Hint 4: This is a complexity hint' , showText: false},
-    { type: 'structure', text: 'Hint 1: This is an structure hint' , showText: false},
-    { type: 'validation', text: 'Hint 2: This is a validation hint' , showText: false},
-    { type: 'error', text: 'Hint 3: This is a error hint' , showText: false},
-    { type: 'complexity', text: 'Hint 4: This is a complexity hint' , showText: false}
-  ];
+  hints : any;
 
   constructor(private eventEmitterDataService: EventEmitterService,
     private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.eventEmitterDataService.hintsReceived.subscribe((hints: any) => {
-      console.log('Hints received:', hints);
-      this.hints = hints;
+    this.eventEmitterDataService.hintsReceived.subscribe((response: any) => {
+      console.log('Hints received:', response);
+      let flattenedArray = response.hints.flatMap((innerArray: any[], submission: any) =>
+        innerArray.map(obj => ({ ...obj, submission }))
+      );
+      console.log(flattenedArray);
+      this.hints = flattenedArray;
       this.cdr.detectChanges();
     });
   }
@@ -43,16 +38,16 @@ export class AssistantComponent implements OnInit{
     // hint.showText = !hint.showText;
     this.selectedHint = hint;
     switch (hint.type) {
-      case 'structure':
+      case 'STRUCTURE':
         this.changePicturePath('/assets/vesna_assist.png');
         break;
-      case 'validation':
+      case 'VALIDATION':
         this.changePicturePath('/assets/vid_assist.png');
         break;
-      case 'error':
+      case 'ERROR':
         this.changePicturePath('/assets/vid_assist.png');
         break;
-      case 'complexity':
+      case 'COMPLEXITY':
         this.changePicturePath('/assets/veles_assist.png');
         break;
     }
