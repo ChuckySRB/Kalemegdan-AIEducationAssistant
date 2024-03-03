@@ -5,7 +5,9 @@ from db import Connection
 app = Flask(__name__)
 db = Connection("codding_tasks_db")
 tasks_collection = db.tasks
+
 weakness_collection =db.weakness
+
 @app.route("/")
 def home():
     return "Hello, World!"
@@ -25,29 +27,6 @@ def send_attempt():
 
 
 
-        # Check if the task exists in the database
-        task = tasks_collection.find_one({"idT": task_id})
-
-        if task is None:
-
-            # If the task doesn't exist, create a new task
-            new_task = {
-                "idT": task_id,
-                "name": json_data.get("name", ""),
-                "description": json_data.get("description", ""),
-                "attempts": [],
-                "solution":"1,2,3"
-            }
-            tasks_collection.insert_one(new_task)
-            task = new_task
-            previous_attempts = []
-
-        else:
-
-            # If the task exists, retrieve previous attempts
-            previous_attempts = task.get('attempts', [])[:]
-
-        # Add the new attempt to the task's attempts array
         hints = [{"type":"time","text":"Bad complexity"},{"type":"space","text":"Bad complexity"}]
         new_attempt = {
             "timestamp": json_data.get("time", ""),
@@ -77,8 +56,6 @@ def send_attempt():
         error_message = {"status": "error", "message": str(e)}
         return jsonify(error_message), 400
 
-
-
 @app.route("/add_weakness", methods = ["POST"])
 
 def add_weakness():
@@ -97,6 +74,7 @@ def add_weakness():
     except Exception as e:
         error_message = {"status": "error", "message": str(e)}
         return jsonify(error_message), 400
+
 
 
 if __name__ == "__main__":
