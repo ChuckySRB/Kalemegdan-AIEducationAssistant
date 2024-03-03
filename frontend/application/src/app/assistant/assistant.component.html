@@ -1,11 +1,11 @@
 <div class="assistant-container">
     <div class="row">
-      <div class="assistant-picture">
+      <div class="assistant-picture column left">
         <img [src]="assistantPicturePath" alt="Assistant Picture">
       </div>
-      <div class="selected-hint-container" *ngIf="selectedHint">
+      <div class="selected-hint-container column right" *ngIf="selectedHint">
         <div class="selected-hint">
-          {{ selectedHint.text }}
+         {{ selectedHint.text }}
         </div>
       </div>
     </div>
