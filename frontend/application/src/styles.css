@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+    --code-background-color: #1e1e1e;
+    --dark-background-color: #0f0f0f;
+    --light-text-color: #d4d4d4;
+    --jb-blue: #0078d7;
+    --jb-pink:#ff80bf;
+    --jb-orange: #ffa07a;
+  }
+
+body {
+    background-image: url('assets/background.png');
+
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat; 
+
+    color: var(--light-text-color); /* Light text color */
+    font-family: 'Arial', sans-serif; /* Specify your preferred font */
+    margin: 0; /* Remove default margin to ensure full coverage */
+  }
+

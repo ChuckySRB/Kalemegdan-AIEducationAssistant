@@ -1,0 +1,74 @@
+/* your-assistant.component.css */
+
+.assistant-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+}
+
+.assistant-picture {
+  margin-right: 20px; /* Adjust as needed for spacing between picture and hint */
+}
+
+.assistant-picture img {
+  width: auto; /* Adjust size as needed */
+  height: 40vh; /* Adjust size as needed */
+}
+
+.selected-hint-container {
+  width: 20vw; /* Set a fixed width */
+  height: 40vh; /* Set a fixed height */
+  margin-bottom: 10px; /* Adjust as needed for spacing between selected hint and hint icons list */
+}
+
+.selected-hint {
+  background-color: var(--dark-background-color); /* Background color for the selected hint */
+  padding: 10px;
+  border-radius: 5px;
+  overflow: hidden; /* Ensure text overflow is hidden */
+}
+
+.hints-container {
+  max-height: 150px; /* Set a max height to make it scrollable */
+  overflow-y: auto; /* Enable vertical scrolling if needed */
+}
+
+.hint-icon {
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  border-radius: 50%; /* Make it a circle */
+  background-color: var(--dark-background-color); /* Background color of the icon container */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hint-icon.validation i {
+  color: var(--jb-blue); /* Color of the icon */
+}
+
+.hint-icon.structure i {
+  color: var(--jb-pink); /* Color of the icon */
+}
+
+.hint-icon.complexity i {
+  color: var(--jb-orange); /* Color of the icon */
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.hint-text-container {
+  display: none; /* Initially hide the hint text */
+}
+
+.hint.active .hint-text-container {
+  display: block; /* Display the hint text when the hint is active */
+}

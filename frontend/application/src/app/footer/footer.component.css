@@ -1,0 +1,11 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--dark-background-color); /* Adjust background color */
+    color: #fff; /* Adjust text color */
+    padding: 15px;
+    text-align: center;
+  }
+  
