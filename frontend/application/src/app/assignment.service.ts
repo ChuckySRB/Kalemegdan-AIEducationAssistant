@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AssignmentService {
-  private url = 'http://localhost:3000/assignments';
+  private url = 'http://localhost:8000';
 
   constructor(private http:HttpClient) { }
 

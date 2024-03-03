@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from db import Connection
 from grazie_utils import *
 from assistants import *
 import json
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:4200"])
 db = Connection("codding_tasks_db")
 tasks_collection = db.tasks
 
@@ -81,9 +83,13 @@ def send_attempt():
 
         task['attempts'].append(new_attempt)
 
+        #print(task)
+        hints_arr= []
+        #print("das")
+        for attempt in task['attempts']:
+            hints_arr.append(attempt['hints'])
 
-
-
+        #print(hints_arr)
         #print(task['attempts'])
         #print(task)
         # Update the task in the database
@@ -92,7 +98,7 @@ def send_attempt():
 
         # Prepare response data with both previous and new attempts
         response_data = {"status": "success", "message": "Attempt data inserted into MongoDB",
-                         "previous_attempts": previous_attempts, "new_attempt": new_attempt}
+                         "timestamp": new_attempt['timestamp'], "hints": hints_arr}
         return jsonify(response_data), 200
 
     except Exception as e:
@@ -119,7 +125,45 @@ def add_weakness():
         error_message = {"status": "error", "message": str(e)}
         return jsonify(error_message), 400
 
+@app.route('/get_all', methods=['GET'])
+def get_all_tasks():
+    try:
+        # Retrieve all tasks from the 'tasks' collection
+        all_tasks = list(tasks_collection.find({}, {'_id': 0}))
 
+        # Return the tasks as JSON response
+        return jsonify({"status": "success", "tasks": all_tasks}), 200
+
+    except Exception as e:
+        # Handle any exceptions that might occur
+        error_message = {"status": "error", "message": str(e)}
+        return jsonify(error_message), 500
+
+
+@app.route('/get_assignment/<idT>', methods=['GET'])
+def get_assignment(idT):
+    try:
+        # Get the task ID from the query parameters
+
+
+        if not idT:
+            raise ValueError("Parameter 'idT' is required")
+
+        # Retrieve the task text based on the task ID
+        task = tasks_collection.find_one({"idT": int(idT)})
+
+        if task:
+            task_name = task.get('name', '')
+            task_desc = task.get("description", "")
+
+            return jsonify({"status": "success", "task_name": task_name,"task_desc":task_desc}), 200
+        else:
+            return jsonify({"status": "error", "message": f"Task with ID {idT} not found"}), 404
+
+    except Exception as e:
+        # Handle any exceptions that might occur
+        error_message = {"status": "error", "message": str(e)}
+        return jsonify(error_message), 500
 
 if __name__ == "__main__":
     app.run( port=8000, debug=True)

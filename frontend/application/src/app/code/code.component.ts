@@ -31,9 +31,8 @@ export class CodeComponent implements AfterViewInit{
 
   sendAttempt(){
     const attempt = {
-      taskId: this.taskId,
-      timestamp: new Date().toISOString(),
-      language: this.selectedLanguage,
+      idT: this.taskId,
+      time: new Date().toISOString(),
       code: this.code
     }
 
